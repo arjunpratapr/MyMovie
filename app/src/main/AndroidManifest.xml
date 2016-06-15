@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.DetailActivity"></activity>
+        <activity android:name=".activity.DetailActivity"
+            android:theme="@style/AppTheme1"/>
     </application>
 
 </manifest>

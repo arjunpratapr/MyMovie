@@ -1,17 +1,27 @@
 package com.crprojects.mymovie.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.crprojects.mymovie.R;
-import com.crprojects.mymovie.omdbfiles.SearchService;
+import com.crprojects.mymovie.fragments.ImdbDetails;
+import com.crprojects.mymovie.fragments.RTDetails;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DetailActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     public static final String MOVIE_DETAIL = "movie_detail";
     public static final String IMAGE_URL = "image_url";
 
@@ -20,24 +30,54 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        final SearchService.Detail detail = getIntent().getParcelableExtra(MOVIE_DETAIL);
-        final String imageUrl =  getIntent().getStringExtra(IMAGE_URL);
-        Glide.with(this).load(imageUrl).into( (ImageView) findViewById(R.id.main_backdrop));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // set title for the appbar
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.main_collapsing);
-        collapsingToolbarLayout.setTitle(detail.Title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ((TextView) findViewById(R.id.grid_title)).setText(detail.Title);
-        ((TextView) findViewById(R.id.grid_writers)).setText(detail.Writer);
-        ((TextView) findViewById(R.id.grid_actors)).setText(detail.Actors);
-        ((TextView) findViewById(R.id.grid_director)).setText(detail.Director);
-        ((TextView) findViewById(R.id.grid_genre)).setText(detail.Genre);
-        ((TextView) findViewById(R.id.grid_released)).setText(detail.Released);
-        ((TextView) findViewById(R.id.grid_plot)).setText(detail.Plot);
-        ((TextView) findViewById(R.id.grid_runtime)).setText(detail.Runtime);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ImdbDetails(), "IMDb");
+        adapter.addFragment(new RTDetails(), "Rotten Tomatoes");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 }
+
+
 
