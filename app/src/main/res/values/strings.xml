@@ -53,5 +53,22 @@
     <string name="example_language">English</string>
     <string name="country">Country</string>
     <string name="example_country">USA</string>
+    <string name="example_tmeter">63%</string>
+    <string name="tmeter">Tomato Meter</string>
+    <string name="example_tmtrating">Tomato Rating: 7.9</string>
+    <string name="example_tumeter">67%</string>
+    <string name="example_tmturating">4.9</string>
+    <string name="turl">Tomato URL</string>
+    <string name="example_turl">Placeholder</string>
+    <string name="dvd">DVD</string>
+    <string name="example_dvd">DVD</string>
+    <string name="boxoffice">Box Office</string>
+    <string name="example_boxoffice">3.8mil</string>
+    <string name="production">Production</string>
+    <string name="example_production">Production</string>
+    <string name="website">Website</string>
+    <string name="example_website">Placeholder</string>
+    <string name="tconsensus">Tomato Consensus</string>
+    <string name="exampletconsensus">Placeholder</string>
 </resources>
 

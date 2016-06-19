@@ -50,10 +50,15 @@ public class ImdbDetails extends Fragment {
         // set title for the appbar
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle(detail.Title);
+        if(!detail.imdbRating.equals("N/A")) {
+            float rating = Float.parseFloat(detail.imdbRating);
+            ((RatingBar) rootView.findViewById(R.id.ratingBar2)).setRating(rating);
+        }
+        else {
+            String rating = detail.imdbRating;
+            ((RatingBar) rootView.findViewById(R.id.ratingBar2)).setRating(0);
+        }
 
-        float rating = Float.parseFloat(detail.imdbRating);
-
-        ((RatingBar) rootView.findViewById(R.id.ratingBar2)).setRating(rating);
         ((TextView) rootView.findViewById(R.id.grid_title)).setText(detail.Title);
         ((TextView) rootView.findViewById(R.id.grid_writers)).setText(detail.Writer);
         ((TextView) rootView.findViewById(R.id.grid_actors)).setText(detail.Actors);
@@ -67,6 +72,8 @@ public class ImdbDetails extends Fragment {
         ((TextView) rootView.findViewById(R.id.grid_language)).setText(detail.Language);
         ((TextView) rootView.findViewById(R.id.grid_country)).setText(detail.Country);
         // Inflate the layout for this fragment
+
+
         return rootView;
     }
 
