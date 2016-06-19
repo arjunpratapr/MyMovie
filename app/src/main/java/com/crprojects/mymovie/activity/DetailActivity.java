@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import com.crprojects.mymovie.R;
 import com.crprojects.mymovie.fragments.ImdbDetails;
 import com.crprojects.mymovie.fragments.RTDetails;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class DetailActivity extends AppCompatActivity {
     private ViewPager viewPager;
     public static final String MOVIE_DETAIL = "movie_detail";
     public static final String IMAGE_URL = "image_url";
+    private AdView mAdView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,13 @@ public class DetailActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        mAdView1 = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("A6E8F97F3B8A2096B20ADA4888C33C3A")
+                .build();
+        mAdView1.loadAd(adRequest);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -76,6 +86,30 @@ public class DetailActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView1 != null) {
+            mAdView1.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView1 != null) {
+            mAdView1.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView1 != null) {
+            mAdView1.destroy();
+        }
+        super.onDestroy();
     }
 }
 
