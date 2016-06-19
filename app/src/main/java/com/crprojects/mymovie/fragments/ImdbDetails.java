@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,7 @@ import com.crprojects.mymovie.omdbfiles.SearchService;
  */
 
 public class ImdbDetails extends Fragment {
+    RatingBar ratingBar2;
 
     public ImdbDetails() {
         // Required empty public constructor
@@ -49,6 +51,9 @@ public class ImdbDetails extends Fragment {
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle(detail.Title);
 
+        float rating = Float.parseFloat(detail.imdbRating);
+
+        ((RatingBar) rootView.findViewById(R.id.ratingBar2)).setRating(rating);
         ((TextView) rootView.findViewById(R.id.grid_title)).setText(detail.Title);
         ((TextView) rootView.findViewById(R.id.grid_writers)).setText(detail.Writer);
         ((TextView) rootView.findViewById(R.id.grid_actors)).setText(detail.Actors);
@@ -57,6 +62,10 @@ public class ImdbDetails extends Fragment {
         ((TextView) rootView.findViewById(R.id.grid_released)).setText(detail.Released);
         ((TextView) rootView.findViewById(R.id.grid_plot)).setText(detail.Plot);
         ((TextView) rootView.findViewById(R.id.grid_runtime)).setText(detail.Runtime);
+        ((TextView) rootView.findViewById(R.id.grid_rated)).setText(detail.Rated);
+        ((TextView) rootView.findViewById(R.id.grid_awards)).setText(detail.Awards);
+        ((TextView) rootView.findViewById(R.id.grid_language)).setText(detail.Language);
+        ((TextView) rootView.findViewById(R.id.grid_country)).setText(detail.Country);
         // Inflate the layout for this fragment
         return rootView;
     }
